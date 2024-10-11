@@ -1,0 +1,32 @@
+# kubernetes API 버전지정 > apps/v1 은 Deployment에 사용
+apiVersion: apps/v1
+# 이 리소스의 종류 : Deployment
+kind: Deployment
+metadata:
+# Deployment의 이름
+  name: frontend-deployment
+spec:
+# 실행할 파드수
+  replicas: 3
+  selector:
+    matchLabels:
+# 이 Deploymnet가 관리할 Pod를 선택하는 라벨
+      app: frontend
+  template:
+    metadata:
+#  생성될 Pod의 이름
+      name: frontend
+      labels:
+# Pod에 부여할 라벨
+        app: frontend
+    spec:
+      imagePullSecrets:
+# Docker Hub에서 이미지를 가져오기위한 시크릿
+      - name: dockerhub-secret
+      containers:
+# Docker container 이름
+      - name: frontend
+# 사용할 도커커이미지
+        image: docker.io/ybkang7951/frontend:latest
+        ports:
+        - containerPort: 80 # 컨테이너가 사용할 포트

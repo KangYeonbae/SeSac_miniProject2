@@ -1,0 +1,12 @@
+apiVersion: v1 # Kubrenetes API 버전지정 (Service는 v1 사용)
+kind: Service #이 리소스 종류
+metadata:
+  name: backend-service #이 Service 의 이름
+spec:
+  selector:
+    app: backend # Serviec 가 노출시킬 Pod를 선택하는 라벨 (Deployment 의 Pod 라벨과 일치해야함.)
+  ports:
+  - protocol: TCP #사용할 프로토콜
+    port: 8000 #Service가 노출할 포트 : 파이썬 백앤드 포트가 8000이라서 연결하기위해 8000으로지정
+    targetPort: 8000 #Pod 대상 포트
+  type: ClusterIP #service유형 (내부에서만 소통가능하도록함)

@@ -1,0 +1,23 @@
+apiVersion: apps/v1 #Kubernetes API 지정 (Deployment 는 apps/v1)
+kind: Deployment #이 리소스의 종류
+metadata:
+  name: backend-deployment #이 Deployment 이름
+spec:
+  replicas: 3 # Pod 3개 생성
+  selector:
+    matchLabels:
+      app: backend #이 deployment가 관리할 Pod의 라벨
+  template:
+    metadata:
+      name: backend # Pod 이름
+      labels:
+        app: backend # Pod 라벨
+    spec:
+      containers:
+      - name: backend #  Docker container 이름
+        image: ybkang7951/backend:latest # 사용할 이미지
+        ports:
+        - containerPort: 8000 # 컨테이너가 사용할 포트
+        env:
+        - name: UVICORN_RELOAD #환경변수 이름
+          value: "true" #환경변수 값(Uvicorn의 자동 리로드 기능 활성화)
